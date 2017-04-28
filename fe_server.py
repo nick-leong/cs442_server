@@ -37,7 +37,7 @@ def main():
     s_port = args['port']
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = 'localhost'
+    host = socket.gethostbyname(socket.gethostname())
     port = int(s_port)
 
     sock.bind((host, port))

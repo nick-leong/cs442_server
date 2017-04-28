@@ -40,6 +40,8 @@ def main():
     host = socket.gethostbyname(socket.gethostname())
     port = int(s_port)
 
+    print "Host:", host, " | Port:", port
+
     sock.bind((host, port))
 
     print "looking for clients"

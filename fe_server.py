@@ -11,23 +11,39 @@ import random
 import collections
 from socket import error as socket_error
 
+global connected
+
 def on_accept_client(client_sock, address):
+    global connected
+
     while True:
 
         try:
             msg = client_sock.recv(1024)
-            print msg
 
-            client_sock.send("ok")
+            if msg == None or msg == '':
+                pass
+            else:
+                print "MSG:", msg
 
-            if msg is "close":
-                print "closing connection with", address
-                client_sock.close()
+                if msg[0] == 'a': #amount of users connected
+                    client_sock.send(str(connected))
+
+                elif msg == "close":
+                    connected=connected-1
+                    print "closing connection with", address
+                    client_sock.close()
+
+                else:
+                    client_sock.send("err")
 
         except socket_error as s_error:
+            print "lost connection with:", address
             return 
 
 def main():
+    global connected
+    connected = 0
 
     parser = argparse.ArgumentParser(description='Friend Explorer Socket Server')
     parser.add_argument('-p','--port', help='Socket Port', required=True)
@@ -49,6 +65,7 @@ def main():
 
     while True:
         (conn, addr) = sock.accept()
+        connected=connected+1
         print "found client:", addr
         thread.start_new_thread(on_accept_client, (conn, addr))
 

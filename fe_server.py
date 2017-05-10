@@ -31,16 +31,16 @@ def on_accept_client(client_sock, address):
                 if msg[0] == 'a': #string containing scores
                     client_sock.send(''+str(scores['g'])+','+str(scores['b'])+','+str(scores['r'])+','+str(scores['o']))
 
-                if msg[0] == 'g':
+                elif msg[0] == 'g':
                     scores['g'] = scores['g']+1
 
-                if msg[0] == 'b':
+                elif msg[0] == 'b':
                     scores['b'] = scores['b']+1
 
-                if msg[0] == 'r':
+                elif msg[0] == 'r':
                     scores['r'] = scores['r']+1
 
-                if msg[0] == 'o':
+                elif msg[0] == 'o':
                     scores['o'] = scores['o']+1
 
                 elif msg == "close":

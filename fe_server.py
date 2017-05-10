@@ -29,7 +29,7 @@ def on_accept_client(client_sock, address):
                 print "MSG:", msg
 
                 if msg[0] == 'a': #string containing scores
-                    client_sock.send(''+scores['g']+','+scores['b']+','+scores['r']+','+scores['o'])
+                    client_sock.send(''+str(scores['g'])+','+str(scores['b'])+','+str(scores['r'])+','+str(scores['o']))
 
                 if msg[0] == 'g':
                     scores['g'] = scores['g']+1

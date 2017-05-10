@@ -19,6 +19,7 @@ def on_accept_client(client_sock, address):
             print msg
 
             client_sock.send("ok")
+            print 'sent "ok"'
 
             if msg is "close":
                 print "closing connection with", address

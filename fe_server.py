@@ -12,9 +12,11 @@ import collections
 from socket import error as socket_error
 
 global connected
+global scores
 
 def on_accept_client(client_sock, address):
     global connected
+    global scores
 
     while True:
 
@@ -26,8 +28,20 @@ def on_accept_client(client_sock, address):
             else:
                 print "MSG:", msg
 
-                if msg[0] == 'a': #amount of users connected
-                    client_sock.send(str(connected))
+                if msg[0] == 'a': #string containing scores
+                    client_sock.send(''+scores['g']+','+scores['b']+','+scores['r']+','+scores['o'])
+
+                if msg[0] == 'g':
+                    scores['g'] = scores['g']+1
+
+                if msg[0] == 'b':
+                    scores['b'] = scores['b']+1
+
+                if msg[0] == 'r':
+                    scores['r'] = scores['r']+1
+
+                if msg[0] == 'o':
+                    scores['o'] = scores['o']+1
 
                 elif msg == "close":
                     connected=connected-1
@@ -43,7 +57,9 @@ def on_accept_client(client_sock, address):
 
 def main():
     global connected
+    global scores
     connected = 0
+    scores = {'g': 0, 'b': 0, 'r': 0, 'o': 0}
 
     parser = argparse.ArgumentParser(description='Friend Explorer Socket Server')
     parser.add_argument('-p','--port', help='Socket Port', required=True)

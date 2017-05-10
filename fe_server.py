@@ -33,16 +33,20 @@ def on_accept_client(client_sock, address):
 
                 elif msg[0] == 'g':
                     scores['g'] = scores['g']+1
+                    client_sock.send("ok")
 
                 elif msg[0] == 'b':
                     scores['b'] = scores['b']+1
+                    client_sock.send("ok")
 
                 elif msg[0] == 'r':
                     scores['r'] = scores['r']+1
+                    client_sock.send("ok")
 
                 elif msg[0] == 'o':
                     scores['o'] = scores['o']+1
-
+                    client_sock.send("ok")
+                    
                 elif msg == "close":
                     connected=connected-1
                     print "closing connection with", address

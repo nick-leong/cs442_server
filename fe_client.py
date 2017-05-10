@@ -28,7 +28,7 @@ def main():
     sock.connect((dest, port))
 
     try:
-        msg = "hello"
+        msg = raw_input('Command: ')
         sock.send(msg)
 
         amount_received = 0
@@ -36,9 +36,19 @@ def main():
 
         while amount_received < amount_expected:
             result_data = sock.recv(1024)
+
+            if result_data == 'err':
+                sock.send("close")
+                break;
+
             amount_received += len(result_data)
+            print result_data
 
             sock.send("close")
+
+    except NameError:
+        sock.send("close")
+        sock.close()
 
     finally:
         sock.close()
